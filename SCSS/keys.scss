@@ -1,0 +1,57 @@
+.key{
+    width: 40px;
+    height: 40px;
+    border: 2px solid black;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: olivedrab;
+    padding: 4px;
+    color: black;
+    font-weight: 600;
+    &_backspace{
+        width: 105px;
+    }
+    &_tab{
+        width: 50px; 
+    }
+    &_capslock{
+        width: 108px;  
+    }
+    &_enter{
+        width: 84px; 
+    }
+    &_del{
+        width: 48px;
+    }
+    &_shift-rigth{
+        width: 87px; 
+    }
+    &_shift-left{
+        width: 105px;  
+    }
+    &_space{
+        width: 340px;  
+    }
+}
+.arrow{
+    width: 20px;
+    height: 20px;
+    &_up{
+        transform: rotate(90deg);
+    }
+    &_rigth{
+        transform: rotate(180deg);
+    }
+    &_down{
+        transform: rotate(270deg);
+    }
+    &_left{
+        transform: rotate(0deg);
+    }
+}
+.windows{
+    width: 20px;
+    height: 20px;
+}
