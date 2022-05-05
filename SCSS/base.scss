@@ -4,12 +4,11 @@ html{
 }
 body{
     font-size: 1.6rem;
-    background-color: aquamarine;
+    font-family: 'Montserrat', sans-serif;
 }
 .wrapper{
     margin: 0 auto;
     width: 730px;
-    color:blue;
 }
 .title{
     text-align: center;
@@ -19,5 +18,8 @@ body{
     height: 200px; 
     width: 100%;
     border-radius: 5px;
-    border: 2px solid red;
+    border: none;
+    background-color: #f4f4f4;
+    padding: 10px;
+    margin-bottom: 10px;
 }

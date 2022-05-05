@@ -1,15 +1,14 @@
 .key{
     width: 40px;
     height: 40px;
-    border: 2px solid black;
     border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: olivedrab;
+    background: white;
     padding: 4px;
     color: black;
-    font-weight: 600;
+    transition: all 0.3s;
     &_backspace{
         width: 105px;
     }
@@ -34,6 +33,14 @@
     &_space{
         width: 340px;  
     }
+    &:hover{
+        background:rgb(129, 129, 129);
+        cursor: pointer;
+    }
+}
+.active{
+    color: white;
+    background: black;
 }
 .arrow{
     width: 20px;
