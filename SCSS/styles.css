@@ -444,6 +444,7 @@ a {
 .active {
   color: white;
   background: black;
+  border-radius: 50%;
 }
 
 .arrow {
