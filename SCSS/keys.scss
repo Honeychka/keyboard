@@ -10,37 +10,37 @@
     color: black;
     transition: all 0.3s;
     &_backspace{
-        width: 105px;
+        width: 90px;
     }
     &_tab{
-        width: 50px; 
+        width: 80px; 
     }
     &_capslock{
-        width: 108px;  
+        width: 90px;  
     }
     &_enter{
-        width: 84px; 
-    }
-    &_del{
-        width: 48px;
-    }
-    &_shift-rigth{
-        width: 87px; 
+        width: 78px; 
     }
     &_shift-left{
-        width: 105px;  
+        width: 100px;  
+    }
+    &_shift-rigth{
+        width: 60px;  
     }
     &_space{
-        width: 340px;  
+        width: 362px;  
     }
     &:hover{
         background:rgb(129, 129, 129);
         cursor: pointer;
     }
+    &_arrow{
+        width: 55px;
+    }
 }
 .active{
     color: white;
-    background: black;
+    background: rgb(0,0,0);
     border-radius: 50%;
 }
 .arrow{

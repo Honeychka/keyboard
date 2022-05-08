@@ -12,7 +12,7 @@ body {
 
 .wrapper {
   margin: 0 auto;
-  width: 730px;
+  width: 712px;
 }
 
 .title {
@@ -394,6 +394,8 @@ a {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
   gap: 7px;
   padding: 5px;
   border-radius: 5px;
@@ -413,37 +415,37 @@ a {
   transition: all 0.3s;
 }
 .key_backspace {
-  width: 105px;
+  width: 90px;
 }
 .key_tab {
-  width: 50px;
+  width: 80px;
 }
 .key_capslock {
-  width: 108px;
+  width: 90px;
 }
 .key_enter {
-  width: 84px;
-}
-.key_del {
-  width: 48px;
-}
-.key_shift-rigth {
-  width: 87px;
+  width: 78px;
 }
 .key_shift-left {
-  width: 105px;
+  width: 100px;
+}
+.key_shift-rigth {
+  width: 60px;
 }
 .key_space {
-  width: 340px;
+  width: 362px;
 }
 .key:hover {
   background: rgb(129, 129, 129);
   cursor: pointer;
 }
+.key_arrow {
+  width: 55px;
+}
 
 .active {
   color: white;
-  background: black;
+  background: rgb(0, 0, 0);
   border-radius: 50%;
 }
 

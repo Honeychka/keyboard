@@ -49,6 +49,7 @@ const Keyboard = {
 
         let keys = document.querySelectorAll('.key');
         let tab = document.querySelector('.key_tab');
+        let backspace = document.querySelector('.key_backspace');
         let capslock = document.querySelector('.key_capslock');
         let shiftLeft = document.querySelector('.key_shift-left');
         let shiftRigth = document.querySelector('.key_shift-rigth');
@@ -63,23 +64,42 @@ window.addEventListener('keydown', function(e){
     for(let i = 0; i < keys.length; i++){
         if(e.key == keys[i].getAttribute('keyname') || e.key == keys[i].getAttribute('upperKeyname')){
             keys[i].classList.add('active');
+            if(capslock.classList.contains('active')){
+                Keyboard.properties.value += e.key.toUpperCase();
+            }else{
+                Keyboard.properties.value += e.key
+            }
+            
         }
         if(e.code == 'Space'){
             space.classList.add('active');
+            Keyboard.properties.value += ' ';
         }
-        if(e.code == 'ShiftLeft'){
-            shiftRigth.classList.remove('active');
-        }
-        if(e.code == 'ShiftRight'){
-            shiftLeft.classList.remove('active');
+        if(e.code == 'Backspace'){
+            backspace.classList.add('active');
+            Keyboard.properties.value = Keyboard.properties.value.substring(0, Keyboard.properties.value.length - 1);
         }
         if(e.code == 'CapsLock'){
             capslock.classList.toggle('active');
+            Keyboard._toggleCapsLock();
+            Keyboard.properties.value += '';
         }
         if(e.code == 'Tab'){
             tab.classList.add('active');
             textarea.focus()
+            Keyboard.properties.value += '  ';
         }
+        if(e.code == 'ShiftLeft'){
+            shiftRigth.classList.remove('active');
+            Keyboard._toggleCapsLock();
+            Keyboard.properties.value += '';
+        }
+        if(e.code == 'ShiftRigth'){
+            shiftLeft.classList.remove('active');
+            Keyboard._toggleCapsLock();
+            Keyboard.properties.value += '';
+        }
+        //
     }
 })
 
@@ -91,16 +111,17 @@ window.addEventListener('keyup', function(e){
         if(e.code == 'Space'){
             space.classList.remove('active');
         }
-        
-        if(e.code == 'ShiftLeft'){
-            shiftRigth.classList.remove('active');
-        }
-        if(e.code == 'ShiftRight'){
-            shiftLeft.classList.remove('active');
-        }
         if(e.code == 'Tab'){
             textarea.focus()
             tab.classList.remove('active');
+        }
+        if(e.code == 'ShiftLeft'){
+            shiftRigth.classList.remove('active');
+            Keyboard._toggleCapsLock();
+        }
+        if(e.code == 'ShiftRigth'){
+            shiftLeft.classList.remove('active');
+            Keyboard._toggleCapsLock();
         }
     }
 })
@@ -110,19 +131,28 @@ window.addEventListener('keyup', function(e){
         const fragment = document.createDocumentFragment();
         const keyLayout = [
             "`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "Backspace",
-            "Tab", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\", "Del",
+            "Tab", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\", 
             "CapsLock", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "Enter",
-            "ShiftLt", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?", "arrowUp", "ShiftRt", 
-            "CtrlLt", "windows", "AltLt", " ", "AltRt", "arrowLt", "arrowDn", "arrowRt", "CtrlRt"
+            "ShiftLt", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?", "arrowUp", "ShiftRt",  
+            "CtrlLt", "windows", "AltLt", " ", "arrowLt", "arrowDn", "arrowRt", 
         ];
 
         keyLayout.forEach(key => {
             const keyElement = document.createElement("div");
             keyElement.classList.add("key");
 
-            let arrowClicker = () => {
+            keyElement.addEventListener("mousedown", () => {
+                keyElement.classList.add("active");
+            });
+
+            keyElement.addEventListener("mouseup", () => {
+                keyElement.classList.remove("active");
+
+            });
+
+            let arrowClicker = (ico) => {
                 keyElement.addEventListener("click", () => {
-                this.properties.value += "=>";
+                this.properties.value += `${ico}`;
                 this._triggerEvent("oninput");
             })}
 
@@ -131,10 +161,11 @@ window.addEventListener('keyup', function(e){
                     keyElement.classList.add("key_backspace");
                     keyElement.innerHTML = "Backspace";
 
-                    keyElement.addEventListener("click", () => {
+                    keyElement.addEventListener("mousedown", () => {
                         this.properties.value = this.properties.value.substring(0, this.properties.value.length - 1);
                         this._triggerEvent("oninput");
                     });
+                    
 
                     break;
 
@@ -205,34 +236,38 @@ window.addEventListener('keyup', function(e){
                     break;
 
                 case "arrowUp":
-                    keyElement.innerHTML = `<img src="./assets/img/arrow.png" alt="arrow" class="arrow">`;
-                    keyElement.classList.add('arrow_up');
+                    keyElement.innerHTML = `<img src="./assets/img/arrow.png" alt="arrow" class="arrow arrow_up">`;
+                    keyElement.classList.add('key_arrow');
+                    let ico = '▴'
 
-                   arrowClicker()
+                   arrowClicker(ico)
 
                     break;
                    
                 case "arrowLt":
-                    keyElement.innerHTML = `<img src="./assets/img/arrow.png" alt="arrow" class="arrow">`;
-                    keyElement.classList.add('arrow_left');
+                    keyElement.innerHTML = `<img src="./assets/img/arrow.png" alt="arrow" class="arrow arrow_left">`;
+                    keyElement.classList.add('key_arrow');
+                    let icon = '◂'
 
-                   arrowClicker()
+                    arrowClicker(icon)
 
                     break;
 
                 case "arrowRt":
-                    keyElement.innerHTML = `<img src="./assets/img/arrow.png" alt="arrow" class="arrow">`;
-                    keyElement.classList.add('arrow_rigth');
+                    keyElement.innerHTML = `<img src="./assets/img/arrow.png" alt="arrow" class="arrow  arrow_rigth">`;
+                    keyElement.classList.add('key_arrow');
+                    let icona = '▸'
 
-                   arrowClicker()
+                    arrowClicker(icona)
 
                     break;
 
                 case "arrowDn":
-                    keyElement.innerHTML = `<img src="./assets/img/arrow.png" alt="arrow" class="arrow">`;
-                    keyElement.classList.add('arrow_down');
+                    keyElement.innerHTML = `<img src="./assets/img/arrow.png" alt="arrow" class="arrow arrow_down">`;
+                    keyElement.classList.add('key_arrow');
+                    let ic = '▾'
 
-                   arrowClicker()
+                    arrowClicker(ic)
 
                     break;
 
@@ -266,27 +301,27 @@ window.addEventListener('keyup', function(e){
     },
 
     _toggleCapsLock() {
-        this.properties.capsLock = !this.properties.capsLock;
+        Keyboard.properties.capsLock = !Keyboard.properties.capsLock;
+        
 
-        for (const key of this.elements.keys) {
-            if (key.childElementCount === 0) {
-                key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
+        for (const key of Keyboard.elements.keys) {
+            if (key.getAttribute('keyname')  == languageObj["en"][key.getAttribute('keyname')]) {
+                key.textContent = Keyboard.properties.capsLock ? (key.textContent = `${key.getAttribute('upperkeyname')}`) : key.textContent = `${key.getAttribute('keyname')}`;
             }
         }
+        
     },
 
     open(initialValue, oninput, onclose) {
         this.properties.value = initialValue || "";
         this.eventHandlers.oninput = oninput;
         this.eventHandlers.onclose = onclose;
-      //  this.elements.main.classList.remove("keyboard--hidden");
     },
 
     close() {
         this.properties.value = "";
         this.eventHandlers.oninput = oninput;
         this.eventHandlers.onclose = onclose;
-      //  this.elements.main.classList.add("keyboard--hidden");
     }
 };
 
@@ -297,8 +332,77 @@ window.addEventListener('DOMContentLoaded', function () {
 });
 
 
-
-//function inputTextToTextarea(value) {
-  //  textArea.value = textArea.value.slice(0, positionCursor) + value + textArea.value.slice(positionCursor, textArea.value.length);
-   // positionCursor++;
-//}
+const languageObj = {
+    'en': {
+        "`": "`",
+        "q": "q", 
+        "w": "w", 
+        "e": "e", 
+        "r": "r", 
+        "t": "t", 
+        "y": "y", 
+        "u": "u", 
+        "i": "i", 
+        "o": "o", 
+        "p": "p",
+        "[": "[",
+        "]": "]",
+        "a": "a", 
+        "s": "s", 
+        "d": "d", 
+        "f": "f", 
+        "g": "g", 
+        "h": "h", 
+        "j": "j", 
+        "k": "k", 
+        "l": "l",
+        ";": ";", 
+        "'": "'",  
+        "z": "z", 
+        "x": "x", 
+        "c": "c", 
+        "v": "v", 
+        "b": "b", 
+        "n": "n", 
+        "m": "m",
+        ",": ",",
+        ".": ".",
+        "?": "?",
+    },
+    'ru': {
+        "`": "ё",
+        "q": "й", 
+        "w": "ц", 
+        "e": "у", 
+        "r": "к", 
+        "t": "е", 
+        "y": "н", 
+        "u": "г", 
+        "i": "ш", 
+        "o": "щ", 
+        "p": "з",
+        "[": "х",
+        "]": "ъ",
+        "a": "ф", 
+        "s": "ы", 
+        "d": "в", 
+        "f": "а", 
+        "g": "п", 
+        "h": "р", 
+        "j": "о", 
+        "k": "л", 
+        "l": "д",
+        ";": "ж", 
+        "'": "э",  
+        "z": "я", 
+        "x": "ч", 
+        "c": "с", 
+        "v": "м", 
+        "b": "и", 
+        "n": "т", 
+        "m": "ь",
+        ",": "б",
+        ".": "ю",
+        "?": ".",
+    }
+  };
