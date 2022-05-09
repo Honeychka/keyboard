@@ -1,0 +1,14 @@
+.keyboard{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 5px;
+    border-radius: 5px;
+    background: #f4f4f4;
+}
+
+
