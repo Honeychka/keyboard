@@ -54,6 +54,11 @@ const Keyboard = {
         let shiftLeft = document.querySelector('.key_shift-left');
         let shiftRigth = document.querySelector('.key_shift-rigth');
         let space = document.querySelector('.key_space');
+        let arrowRight = document.querySelector('.right');
+        let arrowLeft = document.querySelector('.left');
+        let arrowUp = document.querySelector('.up');
+        let arrowDown = document.querySelector('.down');
+        let alt = document.querySelector('.key_alt');
         
 
 for(let i = 0; i < keys.length; i++){
@@ -64,43 +69,65 @@ window.addEventListener('keydown', function(e){
     for(let i = 0; i < keys.length; i++){
         if(e.key == keys[i].getAttribute('keyname') || e.key == keys[i].getAttribute('upperKeyname')){
             keys[i].classList.add('active');
+            
             if(capslock.classList.contains('active')){
-                Keyboard.properties.value += e.key.toUpperCase();
-            }else{
+                if(e.code !== 'Enter' && e.code !== 'Space' && e.code !== 'Backspace' && e.code !== 'CapsLock' && e.code !== 'ShiftLeft' && e.code !== 'ShiftRight' && e.code !== 'Tab'){
+                
+                    Keyboard.properties.value += e.key.toUpperCase();
+                }
+            }else if(e.code !== 'Enter' && e.code !== 'Space' && e.code !== 'Backspace' && e.code !== 'CapsLock' && e.code !== 'ShiftLeft' && e.code !== 'ShiftRight' && e.code !== 'Tab'){
                 Keyboard.properties.value += e.key
             }
-            
         }
-        if(e.code == 'Space'){
-            space.classList.add('active');
-            Keyboard.properties.value += ' ';
-        }
-        if(e.code == 'Backspace'){
-            backspace.classList.add('active');
-            Keyboard.properties.value = Keyboard.properties.value.substring(0, Keyboard.properties.value.length - 1);
-        }
-        if(e.code == 'CapsLock'){
-            capslock.classList.toggle('active');
-            Keyboard._toggleCapsLock();
-            Keyboard.properties.value += '';
-        }
-        if(e.code == 'Tab'){
-            tab.classList.add('active');
-            textarea.focus()
-            Keyboard.properties.value += '  ';
-        }
-        if(e.code == 'ShiftLeft'){
-            shiftRigth.classList.remove('active');
-            Keyboard._toggleCapsLock();
-            Keyboard.properties.value += '';
-        }
-        if(e.code == 'ShiftRigth'){
-            shiftLeft.classList.remove('active');
-            Keyboard._toggleCapsLock();
-            Keyboard.properties.value += '';
-        }
-        //
     }
+    if(e.code == 'ArrowRight'){
+        arrowRight.classList.add('active');
+        Keyboard.properties.value += '▸';
+    }
+    if(e.code == 'ArrowLeft'){
+        arrowLeft.classList.add('active');
+        Keyboard.properties.value += '◂';
+    }
+    if(e.code == 'ArrowUp'){
+        arrowUp.classList.add('active');
+        Keyboard.properties.value += '▴';
+    }
+    if(e.code == 'ArrowDown'){
+        arrowDown.classList.add('active');
+        Keyboard.properties.value += '▾';
+    }
+
+    if(e.code == 'Space'){
+        space.classList.add('active');
+        Keyboard.properties.value += ' ';
+    }
+    if(e.code == 'Backspace'){
+        backspace.classList.add('active');
+        Keyboard.properties.value = Keyboard.properties.value.substring(0, Keyboard.properties.value.length - 1);
+    }
+    if(e.code == 'CapsLock'){
+        capslock.classList.add('active', Keyboard.properties.capsLock);
+        Keyboard._toggleCapsLock();
+        Keyboard.properties.value += '';
+    }
+    if(e.code == 'Tab'){
+        tab.classList.add('active');
+        textarea.focus()
+        Keyboard.properties.value += '  ';
+    }
+    if(e.code == 'ShiftLeft'){
+        shiftRigth.classList.remove('active');
+        Keyboard._toggleCapsLock();
+        Keyboard.properties.value += '';
+       // alt.addEventListener('keydown', LanguageToggler);
+
+    }
+    if(e.code == 'ShiftRight'){
+        shiftLeft.classList.remove('active');
+        Keyboard._toggleCapsLock();
+        Keyboard.properties.value += '';
+    }
+    return Keyboard.properties.value;
 })
 
 window.addEventListener('keyup', function(e){
@@ -119,9 +146,21 @@ window.addEventListener('keyup', function(e){
             shiftRigth.classList.remove('active');
             Keyboard._toggleCapsLock();
         }
-        if(e.code == 'ShiftRigth'){
+        if(e.code == 'ShiftRight'){
             shiftLeft.classList.remove('active');
             Keyboard._toggleCapsLock();
+        }
+        if(e.code == 'ArrowRight'){
+            arrowRight.classList.remove('active');
+        }
+        if(e.code == 'ArrowLeft'){
+            arrowLeft.classList.remove('active');
+        }
+        if(e.code == 'ArrowUp'){
+            arrowUp.classList.remove('active');
+        }
+        if(e.code == 'ArrowDown'){
+            arrowDown.classList.remove('active');
         }
     }
 })
@@ -183,38 +222,52 @@ window.addEventListener('keyup', function(e){
                 case "Tab":
                     keyElement.classList.add("key_tab");
                     keyElement.innerHTML = "Tab";
+                    keyElement.addEventListener("click", () => {
+                        this.properties.value += "  ";
+                        this._triggerEvent("oninput");
+                    });
+
                     break;
 
                 case "ShiftLt":
                     keyElement.classList.add("key_shift-left");
                     keyElement.innerHTML = "Shift";
+
+                    keyElement.addEventListener("mousedown", () => {
+                        this._toggleCapsLock();
+                        keyElement.classList.toggle("active", this.properties.capsLock);
+                    });
+
+                    keyElement.addEventListener("mouseup", () => {
+                        this._toggleCapsLock();
+                        keyElement.classList.toggle("active", this.properties.capsLock);
+                    });
+
                     break;
 
                 case "ShiftRt":
                     keyElement.classList.add("key_shift-rigth");
                     keyElement.innerHTML = "Shift";
+
+                    keyElement.addEventListener("mousedown", () => {
+                        this._toggleCapsLock();
+                        keyElement.classList.toggle("active", this.properties.capsLock);
+                    });
+
+                    keyElement.addEventListener("mouseup", () => {
+                        this._toggleCapsLock();
+                        keyElement.classList.toggle("active", this.properties.capsLock);
+                    }); 
+
                     break;
 
                 case "CtrlLt":
                     keyElement.innerHTML = "Ctrl";
                     break;
 
-                case "CtrlRt":
-                    keyElement.innerHTML = "Ctrl";
-                    break;
-
                 case "AltLt":
                     keyElement.innerHTML = "Alt";
-                    break;
-
-                case "AltRt":
-                    keyElement.innerHTML = "Alt";
-                    break;
-                     
-                case "Del":
-                    keyElement.classList.add("key_del");
-                    keyElement.innerHTML = "Del";
-                    break;   
+                    break; 
 
                 case "Enter":
                     keyElement.classList.add("key_enter");
@@ -238,6 +291,7 @@ window.addEventListener('keyup', function(e){
                 case "arrowUp":
                     keyElement.innerHTML = `<img src="./assets/img/arrow.png" alt="arrow" class="arrow arrow_up">`;
                     keyElement.classList.add('key_arrow');
+                    keyElement.classList.add('up');
                     let ico = '▴'
 
                    arrowClicker(ico)
@@ -247,6 +301,7 @@ window.addEventListener('keyup', function(e){
                 case "arrowLt":
                     keyElement.innerHTML = `<img src="./assets/img/arrow.png" alt="arrow" class="arrow arrow_left">`;
                     keyElement.classList.add('key_arrow');
+                    keyElement.classList.add('left');
                     let icon = '◂'
 
                     arrowClicker(icon)
@@ -256,6 +311,7 @@ window.addEventListener('keyup', function(e){
                 case "arrowRt":
                     keyElement.innerHTML = `<img src="./assets/img/arrow.png" alt="arrow" class="arrow  arrow_rigth">`;
                     keyElement.classList.add('key_arrow');
+                    keyElement.classList.add('right');
                     let icona = '▸'
 
                     arrowClicker(icona)
@@ -265,6 +321,7 @@ window.addEventListener('keyup', function(e){
                 case "arrowDn":
                     keyElement.innerHTML = `<img src="./assets/img/arrow.png" alt="arrow" class="arrow arrow_down">`;
                     keyElement.classList.add('key_arrow');
+                    keyElement.classList.add('down');
                     let ic = '▾'
 
                     arrowClicker(ic)
