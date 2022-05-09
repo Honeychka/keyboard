@@ -1,0 +1,65 @@
+.key{
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    padding: 4px;
+    color: black;
+    transition: all 0.3s;
+    &_backspace{
+        width: 90px;
+    }
+    &_tab{
+        width: 80px; 
+    }
+    &_capslock{
+        width: 90px;  
+    }
+    &_enter{
+        width: 78px; 
+    }
+    &_shift-left{
+        width: 100px;  
+    }
+    &_shift-rigth{
+        width: 60px;  
+    }
+    &_space{
+        width: 362px;  
+    }
+    &:hover{
+        background:rgb(129, 129, 129);
+        cursor: pointer;
+    }
+    &_arrow{
+        width: 55px;
+    }
+}
+.active{
+    color: white;
+    background: rgb(0,0,0);
+    border-radius: 50%;
+}
+.arrow{
+    width: 20px;
+    height: 20px;
+    &_up{
+        transform: rotate(90deg);
+    }
+    &_rigth{
+        transform: rotate(180deg);
+    }
+    &_down{
+        transform: rotate(270deg);
+    }
+    &_left{
+        transform: rotate(0deg);
+    }
+}
+.windows{
+    width: 20px;
+    height: 20px;
+}
