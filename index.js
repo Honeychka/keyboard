@@ -16,13 +16,11 @@ const Keyboard = {
     },
 
     init() {
-        // Create main elements
         this.elements.main = document.createElement("div");
         let title = document.createElement("h1");
         let textarea = document.createElement("textarea");
         this.elements.keysContainer = document.createElement("div");
 
-        // Setup main elements
         this.elements.main.classList.add("wrapper");
         textarea.classList.add("textarea");
         textarea.setAttribute('inputmode', 'text');
@@ -32,13 +30,11 @@ const Keyboard = {
 
         this.elements.keys = this.elements.keysContainer.querySelectorAll(".key");
 
-        // Add to DOM
         this.elements.main.appendChild(title);
         this.elements.main.appendChild(textarea);
         this.elements.main.appendChild(this.elements.keysContainer);
         document.body.appendChild(this.elements.main);
 
-        // Automatically use keyboard for elements with .use-keyboard-input
         document.querySelectorAll(".textarea").forEach(element => {
             element.addEventListener("focus", () => {
                 this.open(element.value, currentValue => {
@@ -58,7 +54,8 @@ const Keyboard = {
         let arrowLeft = document.querySelector('.left');
         let arrowUp = document.querySelector('.up');
         let arrowDown = document.querySelector('.down');
-        let alt = document.querySelector('.key_alt');
+       
+        let ctrl = document.querySelector('.key_ctrl');
         
 
 for(let i = 0; i < keys.length; i++){
@@ -79,6 +76,10 @@ window.addEventListener('keydown', function(e){
                 Keyboard.properties.value += e.key
             }
         }
+    }
+    if(e.code == 'ControlLeft'){
+        ctrl.classList.add('active');
+        Keyboard.properties.value += '';
     }
     if(e.code == 'ArrowRight'){
         arrowRight.classList.add('active');
@@ -162,6 +163,9 @@ window.addEventListener('keyup', function(e){
         if(e.code == 'ArrowDown'){
             arrowDown.classList.remove('active');
         }
+        if(e.code == 'ControlLeft'){
+            ctrl.classList.remove('active');
+        }
     }
 })
     },
@@ -229,6 +233,12 @@ window.addEventListener('keyup', function(e){
 
                     break;
 
+                case "CtrlLt":
+                    keyElement.classList.add("key_ctrl");
+                    keyElement.innerHTML = "Ctrl";
+
+                    break;
+
                 case "ShiftLt":
                     keyElement.classList.add("key_shift-left");
                     keyElement.innerHTML = "Shift";
@@ -261,9 +271,7 @@ window.addEventListener('keyup', function(e){
 
                     break;
 
-                case "CtrlLt":
-                    keyElement.innerHTML = "Ctrl";
-                    break;
+        
 
                 case "AltLt":
                     keyElement.innerHTML = "Alt";
@@ -292,9 +300,8 @@ window.addEventListener('keyup', function(e){
                     keyElement.innerHTML = `<img src="./assets/img/arrow.png" alt="arrow" class="arrow arrow_up">`;
                     keyElement.classList.add('key_arrow');
                     keyElement.classList.add('up');
-                    let ico = '▴'
 
-                   arrowClicker(ico)
+                   arrowClicker('▴')
 
                     break;
                    
@@ -302,9 +309,8 @@ window.addEventListener('keyup', function(e){
                     keyElement.innerHTML = `<img src="./assets/img/arrow.png" alt="arrow" class="arrow arrow_left">`;
                     keyElement.classList.add('key_arrow');
                     keyElement.classList.add('left');
-                    let icon = '◂'
 
-                    arrowClicker(icon)
+                    arrowClicker('◂')
 
                     break;
 
@@ -312,9 +318,8 @@ window.addEventListener('keyup', function(e){
                     keyElement.innerHTML = `<img src="./assets/img/arrow.png" alt="arrow" class="arrow  arrow_rigth">`;
                     keyElement.classList.add('key_arrow');
                     keyElement.classList.add('right');
-                    let icona = '▸'
 
-                    arrowClicker(icona)
+                    arrowClicker('▸')
 
                     break;
 
@@ -322,16 +327,14 @@ window.addEventListener('keyup', function(e){
                     keyElement.innerHTML = `<img src="./assets/img/arrow.png" alt="arrow" class="arrow arrow_down">`;
                     keyElement.classList.add('key_arrow');
                     keyElement.classList.add('down');
-                    let ic = '▾'
-
-                    arrowClicker(ic)
+                    arrowClicker('▾')
 
                     break;
 
                 case "windows":
                     keyElement.innerHTML = `<img src="./assets/img/windows.png" alt="windows" class="windows">`;
                 
-                    break;    
+                    break;  
 
                 default:
                     keyElement.textContent = key.toLowerCase();
